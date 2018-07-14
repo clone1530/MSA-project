@@ -56,15 +56,30 @@ export default class App extends React.Component<{}, IState> {
     })
   }
 
-
   public render() {
     return (
       <div className="container-fluid">
-      <div className="centreText">
-        {/* React components must have a wrapper node/element */}
-        <h1>( ͡° ͜ʖ ͡°)</h1>
+        <div className="centreText">
+          <div className="dropZone">
+            <Dropzone onDrop={this.state.dropzone} style={{position: "relative"}}>
+              <div style={{height: '50vh'}}>
+                {
+                  this.state.imageFiles.length > 0 ? 
+                    <div>{this.state.imageFiles.map((file) => <img className="image" key={file.name} src={file.preview} /> )}</div> :
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                }  
+              </div>
+            </Dropzone>
+          </div>
+          <div  className="dank">
+          {
+            this.state.results === "" && this.state.imageFiles.length > 0 ?
+            <Loader type="TailSpin" color="#00BFFF" height={80} width={80}/> :
+            <p>{this.state.results}</p>
+          }
+          </div>
+        </div>
       </div>
-    </div>
     );
   }
 }
